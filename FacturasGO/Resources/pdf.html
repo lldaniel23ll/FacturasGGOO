@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document</title>
+    <style>
+        table.border th {
+            padding: 5px;
+            border: 1px solid black;
+        }
+
+        table.border td {
+            padding: 5px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        table.border {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .size {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="full-width">
+        <tr>
+            <td style="width: 30%;"></td>
+            <td style="width: 50%;" align="center">
+                <table>
+                    <tr>
+                        <td align="center" class="size">ALMACEN DE ACCESORIOS</td>
+                    </tr>
+                    <tr>
+                        <td align="center">SE VENDE DE TODO - GG.OO.</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 20%;" align="center">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table class="full-width">
+
+                    <tr>
+                        <td colspan="3" height="20"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <table class="border full-width">
+                                <thead style="background-color: #f0f0f0;">
+                                    <tr>
+                                        <th align="center" style="width: 35%;">LUGAR</th>
+                                        <th align="center"style="width: 15%;">CLIENTE</th>
+                                        <th align="center" style="width: 15%;">FECHA</th>
+                                        <th align="center"style="width: 20%;">DESCRIPCION</th>
+                                        <th align="center"style="width: 15%;">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @Filas
+                                    <tr style="background-color: yellow;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td align="center">TOTAL</td>
+                                        <td align="center">@Total</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
