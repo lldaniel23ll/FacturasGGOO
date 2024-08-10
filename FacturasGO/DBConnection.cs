@@ -10,7 +10,7 @@ namespace FacturasGO
 {
     internal class DBConnection
     {
-        private SqlConnection connection = new SqlConnection("Server=almacendb.c1guokue08ih.us-east-2.rds.amazonaws.com;Database=ALMACENACCESORIOSBD;User=admin;Password=almacenDBpassword123;");
+        private SqlConnection connection = new SqlConnection("Server=almacendb;Database=ALMACENACCESORIOSBD;User=sa;Password=123;");
         public SqlConnection openConnection()
         {
             if (connection.State == ConnectionState.Closed)
