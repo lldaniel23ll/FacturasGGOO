@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace FacturasGO
 {
-    internal class DBConnection
+    public class DBConnection
     {
-        private SqlConnection connection = new SqlConnection("Server=almacendb;Database=ALMACENACCESORIOSBD;User=sa;Password=123;");
-        public SqlConnection openConnection()
+        private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ALMACENACCESORIOS;Uid=root;Pwd=12345;");
+
+        public MySqlConnection openConnection()
         {
             if (connection.State == ConnectionState.Closed)
                 connection.Open();
             return connection;
         }
-        public SqlConnection closeConnection()
+
+        public MySqlConnection closeConnection()
         {
             if (connection.State == ConnectionState.Open)
                 connection.Close();

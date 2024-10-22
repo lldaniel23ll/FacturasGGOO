@@ -134,15 +134,17 @@ namespace FacturasGO
 
                     sl.MergeWorksheetCells("B1", "E1");
                     sl.SetCellValue("B1", "ALMACEN DE ACCESORIOS - GG.OO.");
-                    sl.SetCellValue(2, 1, "Lugar");
+
+                    // Cambiar los encabezados al nuevo orden
+                    sl.SetCellValue(2, 1, "Fecha");
                     sl.SetCellValue(2, 2, "Cliente");
-                    sl.SetCellValue(2, 3, "Fecha");
+                    sl.SetCellValue(2, 3, "Lugar");
                     sl.SetCellValue(2, 4, "Descripcion");
                     sl.SetCellValue(2, 5, "Total");
 
                     sl.SetColumnWidth(1, 20);
                     sl.SetColumnWidth(2, 20);
-                    sl.SetColumnWidth(3, 12);
+                    sl.SetColumnWidth(3, 20);
                     sl.SetColumnWidth(4, 20);
                     sl.SetColumnWidth(5, 12);
 
@@ -203,9 +205,13 @@ namespace FacturasGO
 
                     foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
-                        if (row.Cells["Lugar"].Value != null)
+                        if (row.Cells["Fecha"].Value != null)
                         {
-                            sl.SetCellValue(rowIndex, 1, row.Cells["Lugar"].Value.ToString());
+                            string fullDate = row.Cells["Fecha"].Value.ToString();
+                            string[] hourdate = fullDate.Split(' ');
+                            string date = hourdate[0];
+                            string formattedDate = date.Contains("/") ? date : $"{date.Split('/')[0]}/{date.Split('/')[1]}/{date.Split('/')[2]}";
+                            sl.SetCellValue(rowIndex, 1, formattedDate);
                             sl.SetCellStyle(rowIndex, 1, borderStyle);
                             sl.SetCellStyle(rowIndex, 1, centeredStyle);
                         }
@@ -215,13 +221,9 @@ namespace FacturasGO
                             sl.SetCellStyle(rowIndex, 2, borderStyle);
                             sl.SetCellStyle(rowIndex, 2, centeredStyle);
                         }
-                        if (row.Cells["Fecha"].Value != null)
+                        if (row.Cells["Lugar"].Value != null)
                         {
-                            string fullDate = row.Cells["Fecha"].Value.ToString();
-                            string[] hourdate = fullDate.Split(' ');
-                            string date = hourdate[0];
-                            string formattedDate = date.Contains("/") ? date : $"{date.Split('/')[0]}/{date.Split('/')[1]}/{date.Split('/')[2]}";
-                            sl.SetCellValue(rowIndex, 3, formattedDate);
+                            sl.SetCellValue(rowIndex, 3, row.Cells["Lugar"].Value.ToString());
                             sl.SetCellStyle(rowIndex, 3, borderStyle);
                             sl.SetCellStyle(rowIndex, 3, centeredStyle);
                         }
@@ -276,7 +278,7 @@ namespace FacturasGO
             {
                 MessageBox.Show("No hay datos para exportar.");
             }
-
         }
+
     }
 }

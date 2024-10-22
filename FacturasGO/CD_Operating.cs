@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.AxHost;
-using System.Diagnostics;
-using System.Net;
-using System.Runtime.Remoting.Contexts;
+using MySql.Data.MySqlClient;
 
 namespace FacturasGO
 {
@@ -16,66 +8,78 @@ namespace FacturasGO
     {
         DBConnection connection = new DBConnection();
 
-        SqlDataReader read;
+        MySqlDataReader read;
         DataTable table = new DataTable();
-        SqlCommand cmd = new SqlCommand();
+        MySqlCommand cmd = new MySqlCommand();
 
+        // Mostrar todos los registros
         public DataTable Show()
         {
             cmd.Connection = connection.openConnection();
-            cmd.CommandText = "ShowOperatingAll";
+            cmd.CommandText = "ShowOperating";
             cmd.CommandType = CommandType.StoredProcedure;
             read = cmd.ExecuteReader();
             table.Load(read);
             connection.closeConnection();
             return table;
         }
+
+        // Insertar registro
         public void Insert(string Place, string Client, DateTime Date, string Description, double Total)
         {
             cmd.Connection = connection.openConnection();
             cmd.CommandText = "InsertOperating";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Place", Place);
-            cmd.Parameters.AddWithValue("@Client", Client);
-            cmd.Parameters.AddWithValue("@Date", Date);
-            cmd.Parameters.AddWithValue("@Description", Description);
-            cmd.Parameters.AddWithValue("@Total", Total);
+            cmd.Parameters.AddWithValue("p_Place", Place);
+            cmd.Parameters.AddWithValue("p_Client", Client);
+            cmd.Parameters.AddWithValue("p_Date", Date);
+            cmd.Parameters.AddWithValue("p_Description", Description);
+            cmd.Parameters.AddWithValue("p_Total", Total);
 
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
+            connection.closeConnection();
         }
+
+        // Editar registro
         public void Edit(int ID, string Place, string Client, DateTime Date, string Description, double Total)
         {
             cmd.Connection = connection.openConnection();
             cmd.CommandText = "UpdateOperating";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@ID", ID);
-            cmd.Parameters.AddWithValue("@Place", Place);
-            cmd.Parameters.AddWithValue("@Client", Client);
-            cmd.Parameters.AddWithValue("@Date", Date);
-            cmd.Parameters.AddWithValue("@Description", Description);
-            cmd.Parameters.AddWithValue("@Total", Total);
+            cmd.Parameters.AddWithValue("p_ID", ID);
+            cmd.Parameters.AddWithValue("p_Place", Place);
+            cmd.Parameters.AddWithValue("p_Client", Client);
+            cmd.Parameters.AddWithValue("p_Date", Date);
+            cmd.Parameters.AddWithValue("p_Description", Description);
+            cmd.Parameters.AddWithValue("p_Total", Total);
 
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
+            connection.closeConnection();
         }
+
+        // Eliminar registro
         public void Delete(int ID)
         {
             cmd.Connection = connection.openConnection();
             cmd.CommandText = "DeleteOperating";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@ID", ID);
+            cmd.Parameters.AddWithValue("p_ID", ID);
 
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
+            connection.closeConnection();
         }
+
+        // Buscar por mes y año
         public DataTable Search(int Month, int Year)
         {
             cmd.Connection = connection.openConnection();
             cmd.CommandText = "SearchOperatingByMonthYear";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Month", Month);
-            cmd.Parameters.AddWithValue("@Year", Year);
+            cmd.Parameters.AddWithValue("p_Month", Month);
+            cmd.Parameters.AddWithValue("p_Year", Year);
 
             read = cmd.ExecuteReader();
             table.Load(read);
